@@ -29,9 +29,7 @@ public class MovieService {
         //return movies.stream().map(movie -> modelMapper.map(movie, MovieDto.class)).collect(Collectors.toList());
         for(Movie movie:movies){
             MovieDto movieDto=helper(movie);
-
             movieDtos.add(movieDto);
-
         }
         return movieDtos;
     }
@@ -39,22 +37,18 @@ public class MovieService {
     public MovieDto getMovieByTitle(String title) {
         MovieDto movieDto=new MovieDto();
         Movie movie=movieRepository.findByTitle(title);
-
         if(movie==null){
             movieDto.setMessage("Movie does not exist!");
             return movieDto;
         }
          movieDto=helper(movie);
-
         //return modelMapper.map(movieRepository.findByTitle(title), MovieDto.class);
-
         return movieDto;
     }
 
     public MovieDto updateMovieRate(Long id, Integer rate) {
-        Movie movie=movieRepository.getOne(id);
         int sum=0;
-
+        Movie movie=movieRepository.getOne(id);
         movie.getRating().add(rate);
         return averageCalculator(sum, movie);
     }
@@ -65,29 +59,23 @@ public class MovieService {
             movieDto.setMessage("Rating is required");
             return movieDto;
         }
-
         int sum=0;
         Movie movie=movieRepository.getOne(id);
-
         movie.getRating().add(rate);
         movie.getReview().add(review);
         return averageCalculator(sum, movie);
     }
 
+
+
+    /************ helper methods***********/
+
     private MovieDto averageCalculator(int sum, Movie movie) {
-        //ovie updatedMovie=movieRepository.save(movie);
-        //System.out.println("updated"+updatedMovie);
-        System.out.println("original"+movie);
-
-        MovieDto movieDto=helper(movie);
-
-        // MovieDto movieDto= modelMapper.map(updatedMovie,MovieDto.class);
+         MovieDto movieDto=helper(movie);
         for(Integer r: movieDto.getRating()){
-
             sum+=r;
         }
         movieDto.setAverage(sum/movieDto.getRating().size());
-
         return movieDto;
     }
 
