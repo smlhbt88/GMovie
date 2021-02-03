@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -59,5 +60,24 @@ class MovieServiceTest {
 
         assertEquals(expected.size(),actual.size());
     }
+
+    @Test
+    public void getMovieByTitle(){
+        Movie movie1=new Movie("The Avengers","Joss Whedon",null,2012,
+                "Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop",null);
+
+       when(movieRepository.findByTitle("The Avengers")).thenReturn(movie1);
+
+       MovieDto actual=movieService.getMovieByTitle("The Avengers");
+
+       verify(movieRepository,times(1)).findByTitle("The Avengers");
+
+       assertEquals(movie1.getTitle(),actual.getTitle());
+
+    }
+
+
+
+
 
 }

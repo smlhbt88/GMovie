@@ -41,13 +41,23 @@ public class MovieService {
     }
 
     public MovieDto getMovieByTitle(String title) {
-        if(movieRepository.findByTitle(title)==null){
-            MovieDto movieDto=new MovieDto();
+        MovieDto movieDto=new MovieDto();
+        Movie movie=movieRepository.findByTitle(title);
+        if(movie==null){
             movieDto.setMessage("Movie does not exist!");
             return movieDto;
         }
 
-        return modelMapper.map(movieRepository.findByTitle(title), MovieDto.class);
+        movieDto.setTitle(movie.getTitle());
+        movieDto.setActors(movie.getActors());
+        movieDto.setRating(movie.getRating());
+        movieDto.setDescription(movie.getDescription());
+        movieDto.setDirector(movie.getDirector());
+        movieDto.setRelease(movie.getRelease());
+
+        //return modelMapper.map(movieRepository.findByTitle(title), MovieDto.class);
+
+        return movieDto;
     }
 
     public MovieDto updateMovieRate(Long id, Integer rate) {
