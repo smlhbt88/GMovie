@@ -18,8 +18,10 @@ public class Movie {
     private List<String> actors=new ArrayList<>();
     private int release;
     private String description;
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.LAZY)
     private List<Integer> rating=new ArrayList<>();
+    @ElementCollection
+    private List<String> review=new ArrayList<>();
 
     public Movie(String title, String director, List<String> actors, int release, String description, List<Integer> rating) {
         this.title = title;
@@ -60,5 +62,13 @@ public class Movie {
 
     public List<Integer> getRating() {
         return rating;
+    }
+
+    public List<String> getReview() {
+        return review;
+    }
+
+    public void setReview(List<String> review) {
+        this.review = review;
     }
 }

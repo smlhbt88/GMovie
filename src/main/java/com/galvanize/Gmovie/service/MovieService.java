@@ -39,12 +39,32 @@ public class MovieService {
         int sum=0;
 
         movie.getRating().add(rate);
+        return averageCalculator(sum, movie);
+    }
+
+    public MovieDto getMovieDetailsWithReview(String review, Long id, Integer rate) {
+        if(rate==0){
+            MovieDto movieDto=new MovieDto();
+            movieDto.setMessage("Rating is required");
+            return movieDto;
+        }
+
+        int sum=0;
+        Movie movie=movieRepository.getOne(id);
+
+        movie.getRating().add(rate);
+        movie.getReview().add(review);
+        return averageCalculator(sum, movie);
+    }
+
+    private MovieDto averageCalculator(int sum, Movie movie) {
         Movie updatedMovie=movieRepository.save(movie);
-       MovieDto movieDto= modelMapper.map(updatedMovie,MovieDto.class);
+        MovieDto movieDto= modelMapper.map(updatedMovie,MovieDto.class);
         for(Integer r: updatedMovie.getRating()){
             sum+=r;
         }
         movieDto.setAverage(sum/updatedMovie.getRating().size());
+
         return movieDto;
     }
 }

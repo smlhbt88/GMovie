@@ -29,7 +29,8 @@ public class MovieController {
         return movieService.updateMovieRate(id,rate);
     }
 
-
-
-
+    @PatchMapping("/movies/review/")
+    public MovieDto getMovieDetailsWithReview(@RequestBody String review, @RequestParam Long id, @RequestParam Integer rate){
+        return movieService.getMovieDetailsWithReview(review,id,rate);
+    }
 }

@@ -17,5 +17,6 @@ public class MovieDto {
     private List<Integer> rating=new ArrayList<>();
     private String message;
     private int average;
+    private List<String> review=new ArrayList<>();
 
 }
