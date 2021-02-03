@@ -69,4 +69,83 @@ class MovieControllerTest {
 
     }
 
+//    Rule: Movie details include title, director, actors, release year, description and star rating.
+//
+//    Given an existing movie
+//    When I visit that title
+//    Then I can see all the movie details.
+//
+//    Given a non-existing movie
+//    When I visit that title
+//    Then I receive a friendly message that it doesn't exist.
+
+    @Test
+    public void searchMovieByTitle() throws Exception {
+        Movie movie1=new Movie("The Avengers","Joss Whedon",null,2012,
+                "Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop",null);
+
+        Movie movie2=new Movie("Superman Returns","Bryan Singer",null,2006,
+                "Superman returns to Earth after spending five years in space examining his " +
+                        "homeworld Krypton. But he finds things have changed while he was gone, and he must once again prove himself important to the world"
+                ,null);
+
+        movieRepository.save(movie1);
+        movieRepository.save(movie2);
+
+
+        mockMvc.perform(get("/gmovie/movies/?title=The Avengers"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value("The Avengers"))
+                .andExpect(jsonPath("$.director").value("Joss Whedon"))
+                .andExpect(jsonPath("$.release").value(2012))
+                .andExpect(jsonPath("$.description").value("Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop"));
+
+    }
+
+    @Test
+    public void searchByTitle_NoneExtingMovie() throws Exception {
+        Movie movie1=new Movie("The Avengers","Joss Whedon",null,2012,
+                "Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop",null);
+
+        Movie movie2=new Movie("Superman Returns","Bryan Singer",null,2006,
+                "Superman returns to Earth after spending five years in space examining his " +
+                        "homeworld Krypton. But he finds things have changed while he was gone, and he must once again prove himself important to the world"
+                ,null);
+
+        movieRepository.save(movie1);
+        movieRepository.save(movie2);
+
+
+        mockMvc.perform(get("/gmovie/movies/?title=Titanic"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("Movie does not exist!"));
+    }
+
+
+
+//    Given an existing movie
+//    When I submit a 5 star rating
+//    Then I can see it in the movie details.
+//
+//    Given a movie with one 5 star rating and one 3 star rating
+//    When I view the movie details
+//    Then I expect the star rating to be 4.
+
+    @Test
+    public void movieRating() throws Exception {
+        Movie movie1=new Movie("The Avengers","Joss Whedon",null,2012,
+                "Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop",null);
+
+        Long  id=movieRepository.save(movie1).getId();
+
+        mockMvc.perform(patch("/gmovie/movies/?id="+id+"&?rating="+5))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.rating[0]").value(5))
+                .andExpect(jsonPath("$.title").value("The Avengers"))
+                .andExpect(jsonPath("$.director").value("Joss Whedon"))
+                .andExpect(jsonPath("$.release").value(2012))
+                .andExpect(jsonPath("$.description").value("Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop"));
+
+    }
+
 }

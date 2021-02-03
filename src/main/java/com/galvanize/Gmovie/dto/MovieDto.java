@@ -15,5 +15,6 @@ public class MovieDto {
     private int release;
     private String description;
     private List<Integer> rating=new ArrayList<>();
+    private String message;
 
 }

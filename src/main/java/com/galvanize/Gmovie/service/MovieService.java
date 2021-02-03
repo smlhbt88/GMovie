@@ -23,4 +23,14 @@ public class MovieService {
         return movieRepository.findAll().stream().map(movie -> modelMapper
                 .map(movie,MovieDto.class)).collect(Collectors.toList());
     }
+
+    public MovieDto getMovieByTitle(String title) {
+        if(movieRepository.findByTitle(title)==null){
+            MovieDto movieDto=new MovieDto();
+            movieDto.setMessage("Movie does not exist!");
+            return movieDto;
+        }
+
+        return modelMapper.map(movieRepository.findByTitle(title), MovieDto.class);
+    }
 }
