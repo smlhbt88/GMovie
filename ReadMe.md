@@ -17,6 +17,11 @@ galvanize.com/gmovie/movies/review/?id={id}&rate={rate}   PATCH         200 OK  
 *****************************************************************************************************************************************************************************************************
 
 
+| URI                           | HTTPMethod     | HTTP Status     |
+| :---------------------------  | :----------: | -----------: |
+|  galvanize.com/gmovie/movies | GET   | 200 OK    |
+| galvanize.com/gmovie/movies/?id={id}&?rating={rate}   | GET | 200 OK| |
+
 
 
 
