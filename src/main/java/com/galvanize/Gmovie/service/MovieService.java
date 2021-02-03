@@ -36,7 +36,15 @@ public class MovieService {
 
     public MovieDto updateMovieRate(Long id, Integer rate) {
         Movie movie=movieRepository.getOne(id);
+        int sum=0;
+
         movie.getRating().add(rate);
-        return modelMapper.map(movieRepository.save(movie), MovieDto.class);
+        Movie updatedMovie=movieRepository.save(movie);
+       MovieDto movieDto= modelMapper.map(updatedMovie,MovieDto.class);
+        for(Integer r: updatedMovie.getRating()){
+            sum+=r;
+        }
+        movieDto.setAverage(sum/updatedMovie.getRating().size());
+        return movieDto;
     }
 }

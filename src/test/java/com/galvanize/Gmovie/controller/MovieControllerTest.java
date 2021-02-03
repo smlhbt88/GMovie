@@ -148,4 +148,39 @@ class MovieControllerTest {
 
     }
 
+    @Test
+    public void averageRating() throws Exception {
+        Movie movie1=new Movie("The Avengers","Joss Whedon",null,2012,
+                "Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop",null);
+
+        movieRepository.save(movie1);
+
+        Long  id=movieRepository.save(movie1).getId();
+
+        mockMvc.perform(patch("/gmovie/movies/?id="+id+"&rate="+5))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.average").value(5))
+                .andExpect(jsonPath("$.rating[0]").value(5))
+                .andExpect(jsonPath("$.title").value("The Avengers"))
+                .andExpect(jsonPath("$.director").value("Joss Whedon"))
+                .andExpect(jsonPath("$.release").value(2012))
+                .andExpect(jsonPath("$.description").value("Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop"));
+
+
+
+
+        mockMvc.perform(patch("/gmovie/movies/?id="+id+"&rate="+3))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.average").value(4))
+                .andExpect(jsonPath("$.rating[1]").value(3))
+                .andExpect(jsonPath("$.title").value("The Avengers"))
+                .andExpect(jsonPath("$.director").value("Joss Whedon"))
+                .andExpect(jsonPath("$.release").value(2012))
+                .andExpect(jsonPath("$.description").value("Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop"));
+
+
+
+
+    }
+
 }
