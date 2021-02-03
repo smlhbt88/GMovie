@@ -23,13 +23,13 @@ public class Movie {
     @ElementCollection
     private List<String> review=new ArrayList<>();
 
-    public Movie(String title, String director, List<String> actors, int release, String description, List<Integer> rating) {
+    public Movie(String title, String director, List<String> actors, int release, String description) {
         this.title = title;
         this.director = director;
         this.actors = actors;
         this.release = release;
         this.description = description;
-        this.rating = rating;
+
     }
 
     public Movie() {

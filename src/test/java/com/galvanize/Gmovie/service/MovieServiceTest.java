@@ -37,12 +37,12 @@ class MovieServiceTest {
     @Test
     public void getAllMovies(){
         Movie movie1=new Movie("The Avengers","Joss Whedon",null,2012,
-                "Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop",null);
+                "Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop");
 
         Movie movie2=new Movie("Superman Returns","Bryan Singer",null,2006,
                 "Superman returns to Earth after spending five years in space examining his " +
                         "homeworld Krypton. But he finds things have changed while he was gone, and he must once again prove himself important to the world"
-                ,null);
+                );
 
 
 
@@ -64,7 +64,7 @@ class MovieServiceTest {
     @Test
     public void getMovieByTitle(){
         Movie movie1=new Movie("The Avengers","Joss Whedon",null,2012,
-                "Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop",null);
+                "Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop");
 
        when(movieRepository.findByTitle("The Avengers")).thenReturn(movie1);
 
@@ -76,8 +76,19 @@ class MovieServiceTest {
 
     }
 
+    @Test
+    public void updateMovieRate(){
+        Movie movie1=new Movie("The Avengers","Joss Whedon",null,2012,
+                "Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop");
 
+        movie1.setId(1L);
+        when(movieRepository.getOne(movie1.getId())).thenReturn(movie1);
+        MovieDto actual=movieService.updateMovieRate(movie1.getId(),4);
 
+        verify(movieRepository, times(1)).getOne(movie1.getId());
 
+        assertEquals(4,actual.getRating().get(0));
+
+    }
 
 }
