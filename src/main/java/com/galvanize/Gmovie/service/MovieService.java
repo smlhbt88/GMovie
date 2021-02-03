@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,8 +21,23 @@ public class MovieService {
     @Autowired
     private ModelMapper modelMapper;
     public List<MovieDto> getAllMovies() {
-        return movieRepository.findAll().stream().map(movie -> modelMapper
-                .map(movie,MovieDto.class)).collect(Collectors.toList());
+        List<Movie> movies=movieRepository.findAll();
+        List<MovieDto> movieDtos=new ArrayList<>();
+
+        //return movies.stream().map(movie -> modelMapper.map(movie, MovieDto.class)).collect(Collectors.toList());
+        for(Movie movie:movies){
+            MovieDto movieDto=new MovieDto();
+            movieDto.setTitle(movie.getTitle());
+            movieDto.setActors(movie.getActors());
+            movieDto.setRating(movie.getRating());
+            movieDto.setDescription(movie.getDescription());
+            movieDto.setDirector(movie.getDirector());
+            movieDto.setRelease(movie.getRelease());
+
+            movieDtos.add(movieDto);
+
+        }
+        return movieDtos;
     }
 
     public MovieDto getMovieByTitle(String title) {

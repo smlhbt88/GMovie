@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.galvanize.Gmovie.dto.MovieDto;
 import com.galvanize.Gmovie.model.Movie;
 import com.galvanize.Gmovie.repository.MovieRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,11 @@ class MovieControllerTest {
 
 
     private ObjectMapper objectMapper=new ObjectMapper();
+
+    @BeforeEach
+    public void setUp(){
+        movieRepository.deleteAll();
+    }
 
 
 
@@ -218,6 +224,5 @@ class MovieControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(review)).andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("Rating is required"));
-
     }
 }
