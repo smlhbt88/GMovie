@@ -1,9 +1,6 @@
 package com.galvanize.Gmovie.dto;
 
 import lombok.Data;
-
-import javax.persistence.ElementCollection;
-import javax.persistence.FetchType;
 import java.util.ArrayList;
 import java.util.List;
 
