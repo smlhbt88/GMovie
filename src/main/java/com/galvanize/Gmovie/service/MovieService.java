@@ -17,9 +17,9 @@ public class MovieService {
 
     @Autowired
     private MovieRepository movieRepository;
-
     @Autowired
     private ModelMapper modelMapper;
+
     public List<MovieDto> getAllMovies() {
         List<Movie> movies=movieRepository.findAll();
         List<MovieDto> movieDtos=new ArrayList<>();
@@ -66,7 +66,7 @@ public class MovieService {
 
 
 
-    /************ helper methods***********/
+    /****************************** helper methods********************************/
 
     private MovieDto averageCalculator(int sum, Movie movie) {
          MovieDto movieDto=helper(movie);
@@ -87,7 +87,6 @@ public class MovieService {
         movieDto.setDirector(movie.getDirector());
         movieDto.setRelease(movie.getRelease());
         movieDto.setReview(movie.getReview());
-        //movieDto.setAverage(movie.ge);
 
         return movieDto;
     }

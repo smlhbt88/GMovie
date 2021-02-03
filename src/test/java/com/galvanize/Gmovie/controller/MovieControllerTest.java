@@ -16,6 +16,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -45,9 +47,20 @@ class MovieControllerTest {
 
 
 
+    @Test
+    public void isEmpty() throws Exception {
+        String actualMovies=mockMvc.perform(get("/gmovie/movies"))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(actualMovies);
+
+        assertEquals("[]",actualMovies);
+    }
+
 
     @Test
     public void fetchAllMovies() throws Exception {
+
         Movie movie1=new Movie("The Avengers","Joss Whedon",null,2012,
                 "Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop");
 
@@ -68,8 +81,6 @@ class MovieControllerTest {
                 .andReturn().getResponse().getContentAsString();
 
         assertThat(expectedMovies).isEqualTo(actualMovies);
-
-
     }
 
 
@@ -94,8 +105,8 @@ class MovieControllerTest {
                 .andExpect(jsonPath("$.director").value("Joss Whedon"))
                 .andExpect(jsonPath("$.release").value(2012))
                 .andExpect(jsonPath("$.description").value("Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop"));
-
     }
+
 
     @Test
     public void searchByTitle_NoneExtingMovie() throws Exception {
@@ -117,15 +128,6 @@ class MovieControllerTest {
     }
 
 
-
-//    Given an existing movie
-//    When I submit a 5 star rating
-//    Then I can see it in the movie details.
-//
-//    Given a movie with one 5 star rating and one 3 star rating
-//    When I view the movie details
-//    Then I expect the star rating to be 4.
-
     @Test
     public void movieRating() throws Exception {
         Movie movie1=new Movie("The Avengers","Joss Whedon",null,2012,
@@ -140,8 +142,8 @@ class MovieControllerTest {
                 .andExpect(jsonPath("$.director").value("Joss Whedon"))
                 .andExpect(jsonPath("$.release").value(2012))
                 .andExpect(jsonPath("$.description").value("Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop"));
-
     }
+
 
     @Test
     public void averageRating() throws Exception {
@@ -175,6 +177,8 @@ class MovieControllerTest {
 
     }
 
+
+
     @Test
     public void movieReview() throws Exception {
         Movie movie1=new Movie("The Avengers","Joss Whedon",null,2012,
@@ -195,8 +199,9 @@ class MovieControllerTest {
                 .andExpect(jsonPath("$.director").value("Joss Whedon"))
                 .andExpect(jsonPath("$.release").value(2012))
                 .andExpect(jsonPath("$.description").value("Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop"));
-
     }
+
+
 
     @Test
     public void movieReviewWithOutRating() throws Exception {
