@@ -26,8 +26,10 @@ public class MovieController {
 
     @PatchMapping("/movies")
     public MovieDto updateMovieRate(@RequestParam Long id, @RequestParam Integer rate){
-        return null;
+        return movieService.updateMovieRate(id,rate);
     }
+
+
 
 
 }

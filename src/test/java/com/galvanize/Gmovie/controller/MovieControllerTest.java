@@ -138,7 +138,7 @@ class MovieControllerTest {
 
         Long  id=movieRepository.save(movie1).getId();
 
-        mockMvc.perform(patch("/gmovie/movies/?id="+id+"&?rating="+5))
+        mockMvc.perform(patch("/gmovie/movies/?id="+id+"&rate="+5))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.rating[0]").value(5))
                 .andExpect(jsonPath("$.title").value("The Avengers"))

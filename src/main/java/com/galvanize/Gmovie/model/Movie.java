@@ -1,10 +1,13 @@
 package com.galvanize.Gmovie.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Data
 public class Movie {
     @Id
     @GeneratedValue

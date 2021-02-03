@@ -33,4 +33,10 @@ public class MovieService {
 
         return modelMapper.map(movieRepository.findByTitle(title), MovieDto.class);
     }
+
+    public MovieDto updateMovieRate(Long id, Integer rate) {
+        Movie movie=movieRepository.getOne(id);
+        movie.getRating().add(rate);
+        return modelMapper.map(movieRepository.save(movie), MovieDto.class);
+    }
 }
