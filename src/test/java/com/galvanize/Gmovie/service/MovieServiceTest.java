@@ -91,4 +91,22 @@ class MovieServiceTest {
 
     }
 
+    @Test
+    public void getMovieDetailsWithReview(){
+        Movie movie1=new Movie("The Avengers","Joss Whedon",null,2012,
+                "Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop");
+
+        String review="The movie was great";
+        movie1.setId(1L);
+        when(movieRepository.getOne(movie1.getId())).thenReturn(movie1);
+
+        MovieDto actual=movieService.getMovieDetailsWithReview(review,movie1.getId(),5);
+
+        verify(movieRepository,times(1)).getOne(movie1.getId());
+
+        assertEquals(movie1.getReview().get(0),actual.getReview().get(0));
+       assertEquals(movie1.getRating().get(0),actual.getRating().get(0));
+
+    }
+
 }

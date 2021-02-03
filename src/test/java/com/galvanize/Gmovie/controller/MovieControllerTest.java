@@ -76,15 +76,7 @@ class MovieControllerTest {
 
     }
 
-//    Rule: Movie details include title, director, actors, release year, description and star rating.
-//
-//    Given an existing movie
-//    When I visit that title
-//    Then I can see all the movie details.
-//
-//    Given a non-existing movie
-//    When I visit that title
-//    Then I receive a friendly message that it doesn't exist.
+
 
     @Test
     public void searchMovieByTitle() throws Exception {
